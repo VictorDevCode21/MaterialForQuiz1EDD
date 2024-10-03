@@ -19,10 +19,12 @@ public class DoubleLinkedList {
         size = 0;
     }
 
+    /*Returns the size of the List*/
     public int getSize() {
         return this.size;
     }
 
+    /*Adds new nodes to the list*/
     public void add(int value) {
         DoubleNode node = new DoubleNode(value);
 

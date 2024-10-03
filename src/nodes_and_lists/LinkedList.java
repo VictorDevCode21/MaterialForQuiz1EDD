@@ -8,8 +8,9 @@ package nodes_and_lists;
  *
  * @author PC
  */
-public class LinkedList {
-    private Node first;
+public class LinkedList<T> {
+
+    private Node<T> first;
     private int size;
 
     public int getSize() {
@@ -22,32 +23,37 @@ public class LinkedList {
     }
 
     /*Basic add method to add new Nodes*/
-    public void add(int value) {
-        Node node = new Node(value);
+    public void add(T value) {
+        Node<T> node = new Node<>(value);
         if (size == 0) {  // Empty List
             first = node;
             size = 1;
 
         } else { // Not empty List
-            Node aux = first;
+            Node<T> aux = first;
             while (aux.getNext() != null) {
                 aux = aux.getNext();
             }
 
             aux.setNext(node);
-            size ++;
+            size++;
         }
     }
 
     /*Algorithms for sum, getIndex, cantNodes*/
 
-    /*Method to sum node values*/
-    public int sum () {
+ /*Method to sum node values*/
+    public int sum() {
         int result = 0;
-        Node node = first;
+        Node<T> node = first;
 
         while (node != null) {
-            result += node.getValue();
+            if (node.getValue() instanceof Integer) {
+                result += (Integer) node.getValue();
+            } else {
+                throw new UnsupportedOperationException("sum() only supports Integer values");
+            }
+
             node = node.getNext();
 
         }
@@ -56,8 +62,8 @@ public class LinkedList {
     }
 
     /*Method to return a specific index if the index is in the list*/
-    public Integer getIndex(int index) {
-        Node node = first;
+    public T getIndex(int index) {
+        Node<T> node = first;
         int current = 0;
 
         while (node != null) {
@@ -66,7 +72,7 @@ public class LinkedList {
             }
 
             node = node.getNext();
-            current ++;
+            current++;
         }
 
         return null;
@@ -79,7 +85,7 @@ public class LinkedList {
 
         while (node != null) {
             node = node.getNext();
-            result ++;
+            result++;
         }
 
         return result;
@@ -87,9 +93,9 @@ public class LinkedList {
 
     /*getIndex, max, frequency and swap method. */
 
-    /*Method to return the index of the value of the user input*/
-    public Integer getIndexByValue(int value) {
-        Node node = first;
+ /*Method to return the index of the value of the user input*/
+    public Integer getIndexByValue(T value) {
+        Node<T> node = first;
         int current = 0;
 
         while (node != null) {
@@ -104,14 +110,21 @@ public class LinkedList {
     }
 
     /* Method getMax to return the max element in the list */
-
     public int getMax() {
+        if (first == null) {
+            throw new IllegalStateException("Empty list");
+        }
+
         int maxValue = 0;
-        Node node = first;
+        Node<T> node = first;
 
         while (node != null) {
-            if (node.getValue() > maxValue) {
-                maxValue = node.getValue();
+            if (node.getValue() instanceof Integer) {
+                if ((Integer) node.getValue() > maxValue) {
+                    maxValue = (Integer) node.getValue();
+                }
+            } else {
+                throw new UnsupportedOperationException("getMax() only supports Integer values");
             }
 
             node = node.getNext();
@@ -122,16 +135,14 @@ public class LinkedList {
 
     /* Method frequency to count the repeated values on the list
     accord to the user input*/
-
-    public Integer getFrequency (int value) {
+    public int getFrequency(T value) {
         Node node = first;
         int count = 0;
 
         while (node != null) {
             if (node.getValue() == value) {
-                count ++;
+                count++;
             }
-
 
             node = node.getNext();
         }
@@ -141,49 +152,58 @@ public class LinkedList {
 
     /* Method swap that swaps the position of 2 elements */
     public void swap(int i, int j) {
-        Node nodeI = first;
-        Node nodeJ = first;
+        Node<T> nodeI = first;
+        Node<T> nodeJ = first;
         int current = 0;
-        int auxI = 0;
-        int auxJ = 0;
+        Integer auxI = null;
+        Integer auxJ = null;
 
-        while (nodeI != null) {
+       
+        while (nodeI != null && nodeJ != null) {
             if (i == current) {
-                auxI = nodeI.getValue();
-            } else if (j == current) {
-                auxJ = nodeJ.getValue();
+                if (!(nodeI.getValue() instanceof Integer)) {
+                    throw new UnsupportedOperationException("swap() only supports Integer values " + i);
+                }
+                auxI = (Integer) nodeI.getValue(); 
+            }
+            if (j == current) {
+                if (!(nodeJ.getValue() instanceof Integer)) {
+                    throw new UnsupportedOperationException("swap() only supports Integer values " + j);
+                }
+                auxJ = (Integer) nodeJ.getValue();  
             }
 
             nodeI = nodeI.getNext();
             nodeJ = nodeJ.getNext();
             current++;
+        }
 
+        if (auxI == null || auxJ == null) {
+            throw new IllegalArgumentException("Index out of range");
         }
 
         current = 0;
         nodeI = first;
         nodeJ = first;
 
-        while (nodeJ != null) {
-            if ( i == current) {
-                nodeI.setValue(auxJ);
-            } else if (j == current) {
-                nodeJ.setValue(auxI);
+        while (nodeI != null && nodeJ != null) {
+            if (i == current) {
+                nodeI.setValue((T) auxJ);  
             }
-
+            if (j == current) {
+                nodeJ.setValue((T) auxI);  
+            }
 
             nodeI = nodeI.getNext();
             nodeJ = nodeJ.getNext();
             current++;
         }
-
-
     }
 
 
     /*Print Method to print the value of the nodes inside the list*/
     public void print() {
-        Node node = first;
+        Node<T> node = first;
         String s = "";
 
         while (node != null) {
