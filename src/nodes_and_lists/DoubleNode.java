@@ -8,36 +8,36 @@ package nodes_and_lists;
  *
  * @author PC
  */
-public class DoubleNode {
-    private int value;
-    private DoubleNode next;
-    private DoubleNode prev;
+public class DoubleNode<T> {
+    private T value;
+    private DoubleNode<T> next;
+    private DoubleNode<T> prev;
 
-    public void setNext(DoubleNode node) {
+    public void setNext(DoubleNode<T> node) {
         this.next = node;
     }
 
-    public DoubleNode getNext() {
+    public DoubleNode<T> getNext() {
         return this.next;
     }
 
-    public void setPrev(DoubleNode node) {
+    public void setPrev(DoubleNode<T> node) {
         this.prev = node;
     }
 
-    public DoubleNode getPrev() {
+    public DoubleNode<T> getPrev() {
             return this.prev;
     }
 
-    public DoubleNode(int value) {
+    public DoubleNode(T value) {
         this.value = value;
     }
 
-    public void setValue(int newValue) {
+    public void setValue(T newValue) {
         this.value = newValue;
     }
 
-    public int getValue() {
+    public T getValue() {
         return this.value;
     }
 

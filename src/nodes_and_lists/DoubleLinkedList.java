@@ -8,9 +8,9 @@ package nodes_and_lists;
  *
  * @author PC
  */
-public class DoubleLinkedList {
-    private DoubleNode first;
-    private DoubleNode last;
+public class DoubleLinkedList<T> {
+    private DoubleNode<T> first;
+    private DoubleNode<T> last;
     private int size;
 
     public DoubleLinkedList() {
@@ -25,8 +25,8 @@ public class DoubleLinkedList {
     }
 
     /*Adds new nodes to the list*/
-    public void add(int value) {
-        DoubleNode node = new DoubleNode(value);
+    public void add(T value) {
+        DoubleNode<T> node = new DoubleNode<>(value);
 
         if (size == 0) { // Empty List
             first = node;
@@ -40,8 +40,8 @@ public class DoubleLinkedList {
         size ++;
     }
 
-    public void add(int ...values) {
-        for (int value : values) {
+    public void add(T ...values) {
+        for (T value : values) {
             add(value);
         }
     }
