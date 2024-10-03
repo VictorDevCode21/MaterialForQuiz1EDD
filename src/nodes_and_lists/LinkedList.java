@@ -158,19 +158,18 @@ public class LinkedList<T> {
         Integer auxI = null;
         Integer auxJ = null;
 
-       
         while (nodeI != null && nodeJ != null) {
             if (i == current) {
                 if (!(nodeI.getValue() instanceof Integer)) {
                     throw new UnsupportedOperationException("swap() only supports Integer values " + i);
                 }
-                auxI = (Integer) nodeI.getValue(); 
+                auxI = (Integer) nodeI.getValue();
             }
             if (j == current) {
                 if (!(nodeJ.getValue() instanceof Integer)) {
                     throw new UnsupportedOperationException("swap() only supports Integer values " + j);
                 }
-                auxJ = (Integer) nodeJ.getValue();  
+                auxJ = (Integer) nodeJ.getValue();
             }
 
             nodeI = nodeI.getNext();
@@ -188,16 +187,74 @@ public class LinkedList<T> {
 
         while (nodeI != null && nodeJ != null) {
             if (i == current) {
-                nodeI.setValue((T) auxJ);  
+                nodeI.setValue((T) auxJ);
             }
             if (j == current) {
-                nodeJ.setValue((T) auxI);  
+                nodeJ.setValue((T) auxI);
             }
 
             nodeI = nodeI.getNext();
             nodeJ = nodeJ.getNext();
             current++;
         }
+    }
+
+    public void makeCircular() {
+        if (first == null) {
+            return;
+        }
+        Node aux = first;
+
+        while (aux.getNext() != null) {
+            aux = aux.getNext();
+        }
+
+        aux.setNext(first);
+
+    }
+
+    public void removeCircular() {
+        if (first == null) {
+            return;
+        }
+
+        Node aux = first;
+
+        while (aux.getNext() != first) {
+            aux = aux.getNext();
+        }
+
+        aux.setNext(null);
+
+    }
+
+    public void remove(T value) {
+        if (first == null) {
+            return;
+        }
+
+        if (first.getValue().equals(value)) {
+            first = first.getNext();  
+            size--;  
+            return;
+        }
+
+ 
+        Node<T> current = first;
+        Node<T> previous = null;
+
+        while (current != null && !current.getValue().equals(value)) {
+            previous = current;  
+            current = current.getNext();
+        }
+
+       
+        if (current == null) {
+            return;
+        }
+
+        previous.setNext(current.getNext());
+        size--;  
     }
 
 
